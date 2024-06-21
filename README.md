@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) Factory Digital code assignment.
+Factory Digital code assignment.
 
 ## Running the Database
 
