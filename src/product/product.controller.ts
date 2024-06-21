@@ -1,7 +1,10 @@
-import { Controller, Get, Post, Body, Put, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Delete, Param, UseGuards } from '@nestjs/common';
 import { ProductService } from './product.service';
 import Product from './entities/product';
 import { CreateProductDto } from './dtos/createProductDto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { RoleGuard } from 'src/auth/role.guard';
 
 @Controller('product')
 export class ProductController {
@@ -13,23 +16,32 @@ export class ProductController {
       return products;
     }
 
+    @Roles('ADMIN')
+    @UseGuards(JwtAuthGuard, RoleGuard)
     @Post()
     async createProduct(@Body() createProductDto: CreateProductDto) {
       const newProduct = await this.productService.createProduct(createProductDto);
       return newProduct;
     }
 
+    @Roles('ADMIN')
+    @UseGuards(JwtAuthGuard, RoleGuard)
     @Put(':id')
     async editProduct(@Param('id') id: string, @Body() editProductDto: CreateProductDto) {
       const updatedProduct = await this.productService.editProduct(Number(id), editProductDto);
       return updatedProduct;
     }
 
+    @Roles('ADMIN')
+    @UseGuards(JwtAuthGuard, RoleGuard)
     @Delete(':id')
     async deleteProduct(@Param('id') id: string): Promise<Product> {
       const deletedProduct = await this.productService.deleteProduct(Number(id));
       return deletedProduct;
     }
+
+    @Roles('ADMIN')
+    @UseGuards(JwtAuthGuard, RoleGuard)
     @Get('/:id')
     async getProduct(@Param('id') id: string): Promise<Product> {
       const product = await this.productService.getProductById(Number(id));
