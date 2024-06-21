@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -26,6 +27,6 @@ import { AuthModule } from './auth/auth.module';
   JwtModule.register({ secret: 'secrete', signOptions: { expiresIn: '1h' } }),
   AuthModule,],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,JwtStrategy],
 })
 export class AppModule {}
