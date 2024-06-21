@@ -13,7 +13,7 @@ export class AuthService {
         if (!user)  throw new NotFoundException('Invalid credentials');
         const isMatch = await bcrypt.compare(authenticateDto.password, user.hashedPassword);
         if (!isMatch)  throw new NotFoundException('Invalid credentials');
-        const token = sign({ ...user }, 'secrete');
+        const token = sign({ ...user }, process.env.JWT_SECRET);
         return {token};
     }
 }
