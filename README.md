@@ -24,7 +24,13 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Nest](https://github.com/nestjs/nest) Factory Digital code assignment.
+
+## Running the Database
+
+```bash
+$ docker-compose up
+```
 
 ## Installation
 
