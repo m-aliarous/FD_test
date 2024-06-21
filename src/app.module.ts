@@ -6,6 +6,9 @@ import configuration from './config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -18,7 +21,10 @@ import { UserModule } from './user/user.module';
     inject: [ConfigService],
   }),
   ProductModule,
-  UserModule],
+  UserModule,
+  PassportModule,
+  JwtModule.register({ secret: 'secrete', signOptions: { expiresIn: '1h' } }),
+  AuthModule,],
   controllers: [AppController],
   providers: [AppService],
 })
