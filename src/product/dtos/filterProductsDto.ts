@@ -2,7 +2,7 @@
 import { IsOptional, IsEnum, IsIn } from 'class-validator';
 import Category from '../enums/category';
 
-export class GetProductsDto {
+export class filterProductsDto {
   @IsOptional()
   @IsEnum(Category, { message: 'Invalid category' })
   category?: Category;
