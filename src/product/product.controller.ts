@@ -6,7 +6,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { RoleGuard } from 'src/auth/role.guard';
 import Category from './enums/category';
-import { FilterProductsDto } from './dtos/filterProductsDto';
+import { filterProductsDto } from './dtos/filterProductsDto';
 
 @Controller('product')
 export class ProductController {
@@ -18,7 +18,7 @@ export class ProductController {
         return products;
     }
     @Get('filter')
-    async getProducts(@Query(ValidationPipe) filterDto: FilterProductsDto)
+    async getProducts(@Query(ValidationPipe) filterDto: filterProductsDto)
         : Promise<Product[]> {
         const products = await this.productService.getProducts(filterDto);
         return products;
