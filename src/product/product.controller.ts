@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Delete, Param, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Delete, Param, UseGuards, Query, ValidationPipe } from '@nestjs/common';
 import { ProductService } from './product.service';
 import Product from './entities/product';
 import { CreateProductDto } from './dtos/createProductDto';
@@ -6,6 +6,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { RoleGuard } from 'src/auth/role.guard';
 import Category from './enums/category';
+import { FilterProductsDto } from './dtos/filterProductsDto';
 
 @Controller('product')
 export class ProductController {
@@ -17,11 +18,9 @@ export class ProductController {
         return products;
     }
     @Get('filter')
-    async getProducts(
-        @Query('category') category?: Category,
-        @Query('sortByPrice') sortByPrice?: 'asc' | 'desc',)
+    async getProducts(@Query(ValidationPipe) filterDto: FilterProductsDto)
         : Promise<Product[]> {
-        const products = await this.productService.getProducts(category,sortByPrice);
+        const products = await this.productService.getProducts(filterDto);
         return products;
     }
     @Roles('ADMIN')

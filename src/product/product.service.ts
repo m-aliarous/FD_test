@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dtos/createProductDto';
 import Category from './enums/category';
+import { filterProductsDto } from './dtos/filterProductsDto';
 @Injectable()
 export class ProductService {
     constructor(
@@ -58,16 +59,16 @@ export class ProductService {
         await this.productRepository.delete(product.id);
         return product;
     }
-    //      delete a Product
-    async getProducts(category?: Category, sortByPrice?: 'asc' | 'desc'): Promise<Product[]> {
+    //      filter and sort Products
+    async getProducts(queryDto : filterProductsDto): Promise<Product[]> {
         let queryBuilder = this.productRepository.createQueryBuilder('product');
     
-        if (category) {
-          queryBuilder = queryBuilder.where('product.category = :category', { category });
+        if (queryDto.category) {
+          queryBuilder = queryBuilder.where('product.category = :category', { category: queryDto.category});
         }
-        if (sortByPrice === 'asc') {
+        if (queryDto.sortByPrice === 'asc') {
           queryBuilder = queryBuilder.orderBy('product.price', 'ASC');
-        } else if (sortByPrice === 'desc') {
+        } else if (queryDto.sortByPrice === 'desc') {
           queryBuilder = queryBuilder.orderBy('product.price', 'DESC');
         }
     
