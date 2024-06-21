@@ -25,7 +25,7 @@ class User {
   public email: string;
 
   @Column({ name: "password" })
-  public password: string;
+  public hashedPassword: string;
 
   @Column({
     name: "user_type",
