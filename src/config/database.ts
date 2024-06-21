@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import Product from 'src/product/entities/product';
+import User from 'src/user/entities/user';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 export const dbConfig = (): PostgresConnectionOptions => ({
@@ -10,7 +11,7 @@ export const dbConfig = (): PostgresConnectionOptions => ({
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
   ssl: process.env.POSTGRES_SSL === 'true',
-  entities: [Product],
+  entities: [Product,User],
   synchronize: true,
 });
 
